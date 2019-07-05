@@ -7,8 +7,7 @@
         "test": "node node_modules/@rickkas7/particle-builder/particle-builder.js ."
     },
     "author": "rickkas7@github.com",
-    "contributors": [
-    ],
+    "contributors": [],
     "license": "Apache Version 2.0",
     "dependencies": {
         "@rickkas7/particle-builder": "^0.0.4"
