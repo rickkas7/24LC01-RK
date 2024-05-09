@@ -40,6 +40,25 @@ public:
 	inline size_t length() { return MEMORY_SIZE; }
 
 	/**
+	 * @brief Sets the number of tries to start a read or write (default: 5)
+	 * 
+	 * @param tries 
+	 * @return EEPROM_24LC01& 
+	 */
+	EEPROM_24LC01 &withReadWriteTries(size_t tries) { this->readWriteTries = tries; return *this; };
+
+	/**
+	 * @brief Sets the number of tries to wait for completion of a write (default: 100)
+	 * 
+	 * @param tries 
+	 * @return EEPROM_24LC01& 
+	 * 
+	 * In version 0.0.1 of the library, the default number of tries was 10, which is not sufficient.
+	 */
+	EEPROM_24LC01 &withCompletionTries(size_t tries) { this->completionTries = tries; return *this; };
+
+
+	/**
 	 * @brief Erase the EEPROM to 0 values
 	 *
 	 * This operation takes seconds to complete.
@@ -146,6 +165,9 @@ public:
 
 protected:
 	TwoWire &wire;
+	size_t readWriteTries = 5;
+	size_t completionTries = 100;
+
 };
 
 

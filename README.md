@@ -32,3 +32,9 @@ bool writeData(size_t eepromAddr, const uint8_t *data, size_t dataLen);
 
 You can also use get and put like the [EEPROM API](https://docs.particle.io/reference/firmware/photon/#eeprom). This makes it easy to convert code between using the built-in EEPROM and I2C EEPROM as you can use the calls nearly identically.
 
+## Release notes
+
+### 0.0.2 (2024-05-09)
+
+- Increased number of completion retries from 10 to 100 as the chip may not be done writing within 10 tries.
+- Allow configuration of retries using withReadWriteTries() and withCompletionTries().

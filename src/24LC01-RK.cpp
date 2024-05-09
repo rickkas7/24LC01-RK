@@ -52,7 +52,7 @@ bool EEPROM_24LC01::readData(size_t eepromAddr, uint8_t *data, size_t dataLen) {
 
 	uint8_t i2cAddr = (uint8_t)((eepromAddr >> BLOCK_BITS) | DEVICE_ADDR);
 
-	for(size_t tries = 1; tries <= 5; tries++) {
+	for(size_t tries = 1; tries <= readWriteTries; tries++) {
 		wire.beginTransmission(i2cAddr);
 		wire.write(eepromAddr & (BLOCK_SIZE - 1));
 		int stat = wire.endTransmission(false);
@@ -109,7 +109,7 @@ bool EEPROM_24LC01::writeData(size_t eepromAddr, const uint8_t *data, size_t dat
 	while(dataLen > 0) {
 		uint8_t i2cAddr = (uint8_t)((eepromAddr >> BLOCK_BITS) | DEVICE_ADDR);
 
-		for(size_t writeTries = 1; writeTries <= 5; writeTries++) {
+		for(size_t writeTries = 1; writeTries <= readWriteTries; writeTries++) {
 			wire.beginTransmission(i2cAddr);
 
 			size_t blockNum = eepromAddr & (BLOCK_SIZE - 1);
@@ -153,7 +153,7 @@ bool EEPROM_24LC01::writeData(size_t eepromAddr, const uint8_t *data, size_t dat
 		}
 
 		// Wait for completion
-		for(size_t tries = 1; tries <= 10; tries++) {
+		for(size_t tries = 1; tries <= completionTries; tries++) {
 			wire.beginTransmission(i2cAddr);
 			int stat = wire.endTransmission(true);
 			if (stat == 0) {
